@@ -30,5 +30,5 @@ Contentmania: create Library
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
 
 ## Развёртывание:
-- artisan migrate
-- artisan db:seed
+- artisan migrate --seed
+

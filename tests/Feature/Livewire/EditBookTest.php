@@ -2,20 +2,26 @@
 
 namespace Tests\Feature\Livewire;
 
-use App\Http\Livewire\EditBook;
 use App\Models\Book;
+use App\Models\User;
+use Database\Factories\BookFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class EditBookTest extends TestCase
 {
-    /** @test */
-    public function the_component_can_render()
-    {
-        $component = Livewire::test(EditBook::class, ['id' => 2]);
+    use RefreshDatabase;
 
-        $component->assertStatus(200);
+    /** @test */
+    public function the_component_can_update()
+    {
+
+        $book = BookFactory::factoryForModel(Book::class)->create();
+
+        $this->actingAs($user = User::factory()->create())
+            ->get(route('editBook',$book))
+            ->assertStatus(200);
+
     }
 }

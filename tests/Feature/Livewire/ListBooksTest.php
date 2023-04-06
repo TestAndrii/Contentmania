@@ -4,14 +4,14 @@ namespace Tests\Feature\Livewire;
 
 use App\Http\Livewire\ListBooks;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Livewire\Livewire;
 use Tests\TestCase;
 
 class ListBooksTest extends TestCase
 {
+    use RefreshDatabase;
 
-        /**
+    /**
      * test_the_application_returns_a_successful_response
      *
      * @return void
