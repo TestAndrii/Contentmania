@@ -1,5 +1,9 @@
 <?php
 
+use App\Http\Livewire\ListBooks;
+use App\Http\Livewire\CreateBook;
+use App\Http\Livewire\EditBook;
+use App\Http\Livewire\HomeBook;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -14,5 +18,16 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('home');
 });
+
+Route::middleware([
+    'auth:sanctum',
+    config('jetstream.auth_session'),
+    'verified'
+])->group(function () {
+    Route::get('/books', ListBooks::class)->name('books');
+    Route::get('/book/create', CreateBook::class)->name('createBook');
+    Route::get('/book/{id}/edit', EditBook::class)->name('editBook');
+});
+

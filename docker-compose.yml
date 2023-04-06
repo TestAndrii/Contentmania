@@ -23,6 +23,10 @@ services:
             - sail
         depends_on:
             - mysql
+            # - redis
+            # - meilisearch
+            # - mailpit
+            # - selenium
     mysql:
         image: 'mysql/mysql-server:8.0'
         ports:
@@ -35,7 +39,8 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_ALLOW_EMPTY_PASSWORD: 1
         volumes:
-            - 'sail-mysql:/var/lib/mysql'
+            # - 'sail-mysql:/var/lib/mysql'
+            - '../sail-mysql:/var/lib/mysql'
             - './vendor/laravel/sail/database/mysql/create-testing-database.sh:/docker-entrypoint-initdb.d/10-create-testing-database.sh'
         networks:
             - sail
@@ -47,9 +52,21 @@ services:
                 - '-p${DB_PASSWORD}'
             retries: 3
             timeout: 5s
+    adminer:
+        image: adminer:latest
+        ports:
+            - '${FORWARD_ADMINER_PORT:-8080}:8080'
+        networks:
+            - sail
+        depends_on:
+            - mysql
 networks:
     sail:
         driver: bridge
 volumes:
     sail-mysql:
+        driver: local
+    sail-redis:
+        driver: local
+    sail-meilisearch:
         driver: local
